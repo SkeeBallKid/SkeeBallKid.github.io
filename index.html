@@ -14,60 +14,134 @@
     
     <script type="text/processing">
     
-      Ball[] ball;
+      int blockx;
+int blocky;
+int mousexprev;
+int mouseyprev;
+boolean mousePressedPrev;
+boolean test;
 
-      void setup(){
-        size(700, 600);
-        frameRate(100);
-        ball = new Ball[100];
-        for(int i = 0; i < ball.length; i++){
-            ball[i] = new Ball();
+boolean grid[][];
+
+int initialx;
+int initialy;
+
+boolean hor;
+boolean ver;
+
+void setup() {
+  size(500, 500);
+  blockx=width/8;
+  blocky=7*height/8;
+  grid = new boolean[6][6];
+  test = true;
+}
+
+void draw() {
+  background(255);
+
+  if (blockx < width/8) {
+    blockx=width/8;
+  }
+  if (blockx > width-width/8) {
+    blockx=width-width/8;
+  }
+  if (blocky < height/8) {
+    blocky=height/8;
+  }
+  if (blocky > height-height/8) {
+    blocky=height-height/8;
+  }
+
+  fill(255, 0, 0);
+  rectMode(CENTER);
+  rect(blockx, blocky, width/4, height/4);
+
+  rect(1*width/8, 1*height/8, width/4, height/4);
+
+  println(initialx + "   " + initialy +"   "+mousePressedPrev + "   " + mouseX + "   "+mouseY+"    " + hor + "    " + ver);
+}
+
+void mousePressed() {
+
+  if (mousePressedPrev == false) {
+    initialx = mouseX;
+    initialy = mouseY;
+  }
+
+
+
+  mousexprev = mouseX;
+  mouseyprev = mouseY;
+
+  mousePressedPrev = true;
+}
+
+void mouseDragged() {
+
+  if (mousePressedPrev == true && abs(mouseX-initialx) > abs(mouseY-initialy)) {
+    hor = true;
+    ver = false;
+  } else if (mousePressedPrev == true && abs(mouseX-initialx) < abs(mouseY-initialy)) {
+    hor = false;
+    ver = true;
+  }
+
+
+  if (abs(mouseX-blockx)<width/4 &&  abs(mouseY-blocky) < height/4) {
+    if (hor) {
+      blockx = blockx+mouseX-mousexprev;
+    }
+    if (ver) {
+      blocky = blocky+mouseY-mouseyprev;
+    }
+
+    for (int i = 1; i<6; i++) {
+      for (int j = 1; j<6; j++) {
+
+        if (blockx < width/4+width/8 && blockx > width/4 && abs(blocky-height/8) < height/16) {
+          blockx = width/4+width/8;
+        }
+
+        if (blocky < height/4+height/8 && blocky > height/4 && abs(blockx-width/8) < width/16) {
+          blocky = height/4+height/8;
         }
       }
-
-
-
-      void draw(){
-          background(155,0,0);
-            for(int i = 0; i < ball.length; i++){
-                ball[i].display();
-            }
-
-      }
-      class Ball{
-
-          float x;
-          float y;
-          float Vx;
-          float Vy;
-          float r,g,b,o;
-          float d;
-
-          Ball(){
-              x = random(width);
-              y = random(height);
-              Vx = random(-5,5);
-              Vy = random(-5,5);
-              r = random(255);
-              g = random(255);
-              b = random(255);
-              o = random(255);
-              d = random(30) + 15;
-          }
-
-          void display(){
-              fill(r,g,b,o);
-              ellipse(x,y,d,d);
-              x += Vx;
-              y += Vy;
-              if(x > width || x < 0){
-                  Vx *= -1;
-              }
-              if(y > height || y < 0){
-                  Vy *= -1;
-              }
-          }
     }
+  }
+
+
+  mouseyprev=mouseY;
+  mousexprev=mouseX;
+}
+
+
+void mouseReleased() {
+
+  if (mousePressedPrev) {
+    blockx = (((blockx)/(width/4)))*width/4+width/8;
+
+
+    blocky = (((blocky)/(height/4)))*height/4+width/8;
+
+
+    if (blockx < width/8) {
+      blockx=width/8;
+    }
+    if (blockx > width-width/8) {
+      blockx=width-width/8;
+    }
+    if (blocky < height/8) {
+      blocky=height/8;
+    }
+    if (blocky > height-height/8) {
+      blocky=height-height/8;
+    }
+  }
+
+  mousePressedPrev = false;
+}
+
 
 
     </script>
