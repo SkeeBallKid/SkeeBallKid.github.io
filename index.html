@@ -14,60 +14,125 @@
     
     <script type="text/processing">
     
-      Ball[] ball;
+boolean gridLocations[][];
 
-      void setup(){
-        size(700, 600);
-        frameRate(100);
-        ball = new Ball[100];
-        for(int i = 0; i < ball.length; i++){
-            ball[i] = new Ball();
-        }
-      }
+int yellowBlock1X;
+int yellowBlock1Y;
+
+int yellowBlock2X;
+int yellowBlock2Y;
+
+int redBlockX;
+int redBlockY;
+
+int blueHBlockX;
+int blueHBlockY;
+
+int blueVBlockX;
+int blueVBlockY;
+
+boolean hor;
+boolean ver;
+
+boolean mousePressedPrev;
+int mousexprev;
+int mouseyprev;
 
 
+void setup() {
+size(400,400);
 
-      void draw(){
-          background(155,0,0);
-            for(int i = 0; i < ball.length; i++){
-                ball[i].display();
-            }
+//GRID SETUP
+gridLocations = new boolean[6][6];
+for(int i = 1; i<6;i++){
+  for(int j = 1; j<6;j++){
+  gridLocations[i][j] = true;
+  }
+}
 
-      }
-      class Ball{
+//Block Setup
+yellowBlock1X = 1;
+yellowBlock1Y = 1;
 
-          float x;
-          float y;
-          float Vx;
-          float Vy;
-          float r,g,b,o;
-          float d;
+yellowBlock2X = 2;
+yellowBlock2Y = 3;
 
-          Ball(){
-              x = random(width);
-              y = random(height);
-              Vx = random(-5,5);
-              Vy = random(-5,5);
-              r = random(255);
-              g = random(255);
-              b = random(255);
-              o = random(255);
-              d = random(30) + 15;
-          }
+redBlockX = 3;
+redBlockY = 2;
 
-          void display(){
-              fill(r,g,b,o);
-              ellipse(x,y,d,d);
-              x += Vx;
-              y += Vy;
-              if(x > width || x < 0){
-                  Vx *= -1;
-              }
-              if(y > height || y < 0){
-                  Vy *= -1;
-              }
-          }
-    }
+blueHBlockX = 3;
+blueHBlockY = 1;
+
+blueVBlockX = 1;
+blueVBlockY = 3;
+
+}
+
+void draw(){
+  background(255);
+  println(yellowBlock1X + "    " + yellowBlock1Y);
+  
+  gridLocations = new boolean[6][6];
+for(int i = 1; i<5;i++){
+  for(int j = 1; j<5;j++){
+  gridLocations[i][j] = true;
+  }
+}
+  gridLocations[yellowBlock1X][yellowBlock1Y]=false;
+  gridLocations[yellowBlock2X][yellowBlock2Y]=false;
+  
+  gridLocations[redBlockX][redBlockY] = false;
+  gridLocations[redBlockX+1][redBlockY] = false;
+  gridLocations[redBlockX][redBlockY+1] = false;
+  gridLocations[redBlockX+1][redBlockY+1] = false;
+  
+  gridLocations[blueHBlockX][blueHBlockY] = false;
+  gridLocations[blueHBlockX+1][blueHBlockY] = false;
+  
+  gridLocations[blueVBlockX][blueVBlockY] = false;
+  gridLocations[blueVBlockX][blueVBlockY+1] = false;
+
+stroke(0);
+fill(#EBFA2B);
+
+rect((yellowBlock1X-1)*width/4,(yellowBlock1Y-1)*height/4,width/4,height/4);
+rect((yellowBlock2X-1)*width/4,(yellowBlock2Y-1)*height/4,width/4,height/4);
+
+fill(255,0,0);
+rect((redBlockX-1)*width/4,(redBlockY-1)*height/4,2*width/4,2*height/4);
+
+fill(0,0,255);
+rect((blueHBlockX-1)*width/4,(blueHBlockY-1)*height/4,2*width/4,height/4);
+
+fill(0,0,255);
+rect((blueVBlockX-1)*width/4,(blueVBlockY-1)*height/4,width/4,2*height/4);
+
+
+//MOVE LEFT
+if(keyPressed && keyCode==37 && gridLocations[yellowBlock1X-1][yellowBlock1Y]){
+yellowBlock1X-=1;
+keyPressed=false;
+}
+
+//MOVE RIGHT
+if(keyPressed && keyCode==39 && gridLocations[yellowBlock1X+1][yellowBlock1Y]){
+yellowBlock1X+=1;
+keyPressed=false;
+}
+
+//MOVE UP
+if(keyPressed && keyCode==38 && gridLocations[yellowBlock1X][yellowBlock1Y-1]){
+yellowBlock1Y-=1;
+keyPressed=false;
+}
+
+//MOVE DOWN
+if(keyPressed && keyCode==40 && gridLocations[yellowBlock1X][yellowBlock1Y+1]){
+yellowBlock1Y+=1;
+keyPressed=false;
+}
+
+}
 
 
     </script>
