@@ -373,8 +373,11 @@ void keyPressed() {
         typing = typing.substring(0, typing.length()-1);
       }
     } else if ((keyCode >= 65 && keyCode <= 90) || keyCode == 32) {
-      typing = typing + key;
+      if(keyCode == 87){
+      typing = typing + "w";
       typing = typing.toUpperCase();
+      }
+      
     }
   }
   keyPressedPrev = true;
@@ -383,6 +386,7 @@ void keyPressed() {
 void keyReleased() {
   keyPressedPrev = false;
 }
+
 
 
 
