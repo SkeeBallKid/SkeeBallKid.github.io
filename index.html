@@ -9,15 +9,18 @@
   </head>
   
   <body>
-    <h1>Test PImage</h1>
-    <p>I think it won't work</p>
+    <h1>Test Table</h1>
+    <p>I think it also won't work</p>
     
     <script type="text/processing">
     
 PImage test;
 
+Table table;
+
 
 void setup(){
+  table = loadTable("data.csv", "header");
   size(500,500);
 test = loadImage("FifaWordle.png");
 test.resize(500,250);
@@ -30,7 +33,6 @@ void draw(){
   imageMode(CENTER);
   image(test,width/2,height/2);
 }
-
 
 
     </script>
