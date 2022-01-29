@@ -120,6 +120,8 @@ void draw() {
   image(background, width/2, height/2);
   image(title, width/2, 7*height/64);
 
+
+
   //println(notFound + "notFound");
   if (notFound == true) {
 
@@ -345,6 +347,9 @@ void draw() {
       keyPressed = false;
     }
   }
+  for(int i = 0; i<firstName.length;i++){
+  text(firstName[i],width/2,height/2);
+  }
 
   //println(keyPressedPrev);
 }
@@ -517,6 +522,7 @@ void keyPressed() {
 void keyReleased() {
   keyPressedPrev = false;
 }
+
 
 
 
